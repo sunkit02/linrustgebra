@@ -3,7 +3,7 @@ use error::{Error, Result};
 pub mod error;
 pub mod trait_impls;
 
-#[derive(Debug, PartialEq, PartialOrd)]
+#[derive(PartialEq, PartialOrd)]
 pub struct Vector(Vec<f32>);
 
 impl Vector {
