@@ -70,7 +70,7 @@ impl Vector {
         let other_dim = other.dim();
 
         if self_dim != other_dim {
-            return Err(Error::DimError {
+            return Err(Error::InvalidDimensions {
                 expected: self_dim,
                 got: other_dim,
             });
