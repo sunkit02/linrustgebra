@@ -3,10 +3,11 @@ use error::{Error, Result};
 pub mod error;
 pub mod trait_impls;
 
-#[derive(PartialEq, PartialOrd)]
+#[derive(PartialEq, PartialOrd, Clone)]
 pub struct Vector(Vec<f32>);
 
 impl Vector {
+    /// Zero vector by default
     pub fn new(len: usize) -> Self {
         Self(vec![0.; len])
     }
@@ -56,7 +57,7 @@ impl Vector {
     }
 
     #[inline]
-    pub fn is_orthogonal(&self, other: &Self) -> Result<bool> {
+    pub fn is_orthogonal_with(&self, other: &Self) -> Result<bool> {
         let res = self.dot(other)? == 0.;
         Ok(res)
     }
@@ -124,14 +125,13 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "todo"]
     fn can_calculate_vector_subtraction_with_number() {
-        // let (u, _, _, _) = init_vectors();
-        //
-        // let res = &u - 1.;
-        // let expected = Vector::from_iter(u.0.iter().map(|x| x - 1.));
-        //
-        // assert_eq!(res, Ok(expected));
+        let (u, _, _, _) = init_vectors();
+
+        let res = &u - 1.;
+        let expected = Vector::from_iter(u.0.iter().map(|x| x - 1.));
+
+        assert_eq!(res, expected);
     }
 
     #[test]
@@ -144,7 +144,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "todo"]
     fn can_calculate_vector_multiplication_with_number() {
         let (u, _, _, _) = init_vectors();
 
@@ -188,8 +187,12 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "todo"]
-    fn can_calculate_orthogonality() {
-        todo!()
+    fn can_calculate_orthogonality() -> Result<()> {
+        let u = Vector::from_iter([2., 4., 1.]);
+        let v = Vector::from_iter([2., 1., -8.]);
+
+        assert!(u.is_orthogonal_with(&v)?);
+
+        Ok(())
     }
 }
