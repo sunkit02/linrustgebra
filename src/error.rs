@@ -2,7 +2,11 @@ pub type Result<T> = std::result::Result<T, Error>;
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum Error {
-    InvalidDimensions { expected: usize, got: usize },
+    // -- Matrix
+    InvalidInitialMatrixDimensions,
+
+    // -- Vector
+    UnevenVectorLengths { expected: usize, got: usize },
 }
 
 impl std::fmt::Display for Error {

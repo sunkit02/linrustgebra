@@ -206,3 +206,144 @@ impl std::ops::MulAssign<f32> for Vector {
         s *= rhs;
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::tests::init_vectors;
+
+    #[test]
+    fn can_calculate_vector_addition() {
+        let (u, v, _, _) = init_vectors();
+
+        let res = &u + &v;
+
+        let expected = Vector::from_iter(u.0.iter().zip(v.0.iter()).map(|(x, y)| x + y));
+
+        assert_eq!(res, Ok(expected));
+    }
+
+    #[test]
+    fn can_calculate_vector_addition_with_number() {
+        let (u, _, _, _) = init_vectors();
+
+        let res = &u + 1.;
+        let expected = Vector::from_iter(u.0.iter().map(|x| x + 1.));
+        assert_eq!(res, Ok(expected));
+    }
+
+    #[test]
+    fn can_add_and_assign_in_vector_addition() {
+        let (mut u, v, _, _) = init_vectors();
+
+        let expected = Vector::from_iter(u.0.iter().zip(v.0.iter()).map(|(x, y)| x + y));
+
+        u += &v;
+
+        assert_eq!(u, expected);
+    }
+
+    #[test]
+    fn can_add_and_assign_in_vector_addition_with_number() {
+        let (mut u, _, _, _) = init_vectors();
+
+        let expected = Vector::from_iter(u.0.iter().map(|x| x + 1.));
+
+        u += 1.;
+
+        assert_eq!(u, expected);
+    }
+
+    #[test]
+    fn can_calculate_vector_subtraction() {
+        let (u, v, _, _) = init_vectors();
+
+        let res = &u - &v;
+
+        let expected = Vector::from_iter(u.0.iter().zip(v.0.iter()).map(|(x, y)| x - y));
+
+        assert_eq!(res, Ok(expected));
+    }
+
+    #[test]
+    fn can_calculate_vector_subtraction_with_number() {
+        let (u, _, _, _) = init_vectors();
+
+        let res = &u - 1.;
+        let expected = Vector::from_iter(u.0.iter().map(|x| x - 1.));
+
+        assert_eq!(res, expected);
+    }
+
+    #[test]
+    fn can_subtract_and_assign_in_vector_subtraction() {
+        let (mut u, v, _, _) = init_vectors();
+
+        let expected = Vector::from_iter(u.0.iter().zip(v.0.iter()).map(|(x, y)| x - y));
+
+        u -= &v;
+
+        assert_eq!(u, expected);
+    }
+
+    #[test]
+    fn can_substract_assign_in_vector_subtraction_with_number() {
+        let (mut u, _, _, _) = init_vectors();
+
+        let expected = Vector::from_iter(u.0.iter().map(|x| x - 1.));
+
+        u -= 1.;
+
+        assert_eq!(u, expected);
+    }
+
+    #[test]
+    fn can_calculate_vector_multiplication() {
+        let (u, v, _, _) = init_vectors();
+
+        let res = &u * &v;
+
+        assert_eq!(res, Ok(4.));
+    }
+
+    #[test]
+    fn can_calculate_vector_multiplication_with_number() {
+        let (u, _, _, _) = init_vectors();
+
+        let res = &u * 2.;
+
+        let expected = Vector::from_iter(u.0.iter().map(|x| x * 2.));
+
+        assert_eq!(res, expected);
+    }
+
+    #[test]
+    fn can_multiply_and_assign_in_vector_multiplication() {
+        let (mut u, v, _, _) = init_vectors();
+
+        let expected = Vector::from_iter(u.0.iter().zip(v.0.iter()).map(|(x, y)| x * y));
+
+        u *= &v;
+
+        assert_eq!(u, expected);
+    }
+
+    #[test]
+    fn can_multiply_assign_in_vector_multiplication_with_number() {
+        let (mut u, _, _, _) = init_vectors();
+
+        let expected = Vector::from_iter(u.0.iter().map(|x| x * 1.));
+
+        u *= 1.;
+
+        assert_eq!(u, expected);
+    }
+
+    #[test]
+    fn can_calculate_square() {
+        let (u, _, _, _) = init_vectors();
+        let res = &u * &u;
+
+        assert_eq!(res, Ok(5.));
+    }
+}
